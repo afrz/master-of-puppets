@@ -1,15 +1,19 @@
-const grid = [];
+import { createStore, applyMiddleware, compose } from "redux";
+import thunk from "redux-thunk";
 
-for (let i = 1; i <= 6; i++) {
-  const row = [];
+import rootReducer from "./reducer";
+import initialState from "./initial";
 
-  for (let j = 1; j <= 6; j++) {
-    row.push({ name: `${i}-${j}` });
-  }
+const composeEnhancers =
+  process.env.NODE_ENV !== "production" &&
+  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+    : compose;
 
-  grid.push(row);
-}
-
-export function getGame() {
-  return grid;
+export function configureStore() {
+  return createStore(
+    rootReducer,
+    initialState,
+    composeEnhancers(applyMiddleware(thunk))
+  );
 }

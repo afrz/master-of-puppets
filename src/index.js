@@ -1,9 +1,10 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import { render } from "react-dom";
 import { injectGlobal } from "styled-components";
 
 import registerServiceWorker from "./helpers/serviceWorker";
 import App from "./App";
+import { configureStore } from "./logic/store";
 
 injectGlobal`
   body {
@@ -13,6 +14,8 @@ injectGlobal`
   }
 `;
 
-ReactDOM.render(<App />, document.getElementById("root"));
+const store = configureStore();
+
+render(React.createElement(App, { store }), document.getElementById("root"));
 
 registerServiceWorker();
