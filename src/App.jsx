@@ -2,20 +2,19 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Provider } from "react-redux";
 
-import Board from "./components/Board";
-import { getGame } from "./logic/initial";
+import GameBoard from "./components/Board";
 
 //web application shell (absolute root container)
-const Root = ({ store }) => (
+const App = ({ store }) => (
   <Provider store={store}>
     <div className="app">
-      <Board grid={getGame()} />
+      <GameBoard />
     </div>
   </Provider>
 );
 
-Root.propTypes = {
+App.propTypes = {
   store: PropTypes.object.isRequired
 };
 
-export default Root;
+export default App;

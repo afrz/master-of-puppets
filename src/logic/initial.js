@@ -1,19 +1,26 @@
 import { cards, families } from "../constants/cards";
 
-export default { cards, families };
+function generateBoard(matrixSize) {
+  return shuffle(cards).reduce((matrix, card, index) => {
+    if (index % matrixSize === 0) {
+      //new row
+      matrix.push([card]);
+    } else {
+      //current row
+      matrix[matrix.length - 1].push(card);
+    }
+    return matrix;
+  }, []);
+}
 
-const grid = [];
+function shuffle(array) {
+  let arr = array.slice();
 
-for (let i = 1; i <= 6; i++) {
-  const row = [];
-
-  for (let j = 1; j <= 6; j++) {
-    row.push({ name: `${i}-${j}` });
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
   }
-
-  grid.push(row);
+  return arr;
 }
 
-export function getGame() {
-  return grid;
-}
+export default { cards, families, matrix: generateBoard(6) };

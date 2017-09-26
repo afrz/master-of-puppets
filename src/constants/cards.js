@@ -11,7 +11,8 @@ export const cards = [
   {
     _id: "59c8e6049dc9ddeb9de474da",
     name: "Nunez Daniel",
-    family_id: "59c8e6b01839417e57828a44"
+    family_id: "59c8e6b01839417e57828a44",
+    master: true
   },
   {
     _id: "59c8e60451a098f43f4c3d93",

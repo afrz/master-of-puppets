@@ -1,21 +1,27 @@
 import React from "react";
-
 import styled from "styled-components";
 
 const TileContainer = styled.div`
-  border-radius: 3px;
   border: 2px solid firebrick;
-  padding: 2em;
+  padding: 1em;
   margin: 1em;
   color: black;
-  background: burlywood;
+
+  height: 60px;
+  width: 60px;
+  text-align: center;
 
   &:hover {
     background: firebrick;
   }
+
+  background: ${props => (props.master ? "dodgerblue" : "burlywood")};
+  border-radius: ${props => (props.master ? "100%" : "3px")};
 `;
 
-const Tile = ({ label }) => <TileContainer>{label}</TileContainer>;
+const Tile = ({ label, master }) => (
+  <TileContainer master={master}>{label}</TileContainer>
+);
 
 const FlexRow = styled.div`
   display: flex;
@@ -30,7 +36,7 @@ const FlexRow = styled.div`
 const TileRow = ({ row }) => (
   <FlexRow>
     {row.map((col, index) => {
-      return <Tile key={index} label={col.name} />;
+      return <Tile key={index} label={col.name} master={col.master} />;
     })}
   </FlexRow>
 );
