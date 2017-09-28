@@ -2,11 +2,15 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
 import GameBoard from "./GameBoard";
-import { getMatrix } from "../../logic/selectors";
+import { selectMatrix } from "../../logic/selectors";
 
-const mapStateToProps = state => ({
-  grid: getMatrix(state)
-});
+const mapStateToProps = state => {
+  const grid = selectMatrix(state);
+  console.log(grid);
+  return {
+    grid
+  };
+};
 
 const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
 
