@@ -6,7 +6,6 @@ import { selectMatrix } from "../../logic/selectors";
 
 const mapStateToProps = state => {
   const grid = selectMatrix(state);
-  console.log(grid);
   return {
     grid
   };

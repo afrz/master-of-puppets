@@ -12,12 +12,12 @@ export const selectMatrix = state => {
   });
 };
 
+//state selectors
 export const getMatrix = ({ matrix }) => matrix;
-
 export const getCards = ({ cards }) => cards;
 export const getFamilies = ({ families }) => families;
 
-export const getId = ({ _id }) => _id;
-
+//helpers
 export const getCard = (state, id) => getCards(state)[id];
 export const getFamily = (state, id) => getFamilies(state)[id];
+export const getId = ({ _id }) => _id;

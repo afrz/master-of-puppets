@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const TileContainer = styled.div`
-  border: 2px solid firebrick;
+  border: 2px solid black;
   padding: 1em;
   margin: 1em;
   color: black;
@@ -12,16 +12,22 @@ const TileContainer = styled.div`
   text-align: center;
 
   &:hover {
-    background: firebrick;
+    color: white;
+    background: black;
   }
 
-  background: ${props => (props.master ? "dodgerblue" : "burlywood")};
+  color: ${props => (props.master ? "white" : "black")};
+  background: ${props => (props.master ? "black" : props.backcolor)};
   border-radius: ${props => (props.master ? "100%" : "3px")};
 `;
 
-const Tile = ({ label, master }) => (
-  <TileContainer master={master}>{label}</TileContainer>
-);
+const Tile = ({ tile }) => {
+  return (
+    <TileContainer master={tile.master} backcolor={tile.family.color}>
+      {tile.name}
+    </TileContainer>
+  );
+};
 
 const FlexRow = styled.div`
   display: flex;
@@ -36,7 +42,7 @@ const FlexRow = styled.div`
 const TileRow = ({ row }) => (
   <FlexRow>
     {row.map((col, index) => {
-      return <Tile key={index} label={col.name} master={col.master} />;
+      return <Tile key={index} tile={col} />;
     })}
   </FlexRow>
 );

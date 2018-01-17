@@ -1,12 +1,4 @@
 // cards
-/*
- {
-   id : ""
-   name : ""
-   family_id : 
-}
- */
-
 export const cards = [
   {
     _id: "59c8e6049dc9ddeb9de474da",
@@ -202,31 +194,37 @@ export const families = [
   {
     _id: "59c8e6b01839417e57828a44",
     company: "JUNIPOR",
-    color: "bue"
+    //dodger blue
+    color: "#1E90FF"
   },
   {
     _id: "59c8e6b04f7c53f6a4d97047",
     company: "AUSTECH",
-    color: "violet"
+    //purple
+    color: "#d675d6"
   },
   {
     _id: "59c8e6b03395edcb172963b1",
     company: "EXTRO",
-    color: "yellow"
+    //gold
+    color: "#ffdb19"
   },
   {
     _id: "59c8e6b020a8685f2aaef354",
     company: "ZANYMAX",
-    color: "green"
+    //green
+    color: "#18cc70"
   },
   {
     _id: "59c8e6b0b384c4e1848b246b",
     company: "TEMORAK",
-    color: "orange"
+    //orange
+    color: "#e69500"
   },
   {
     _id: "59c8e6b0c3a82585262d92ab",
     company: "GREEKER",
-    color: "red"
+    //firebric red
+    color: "#c96464"
   }
 ];
