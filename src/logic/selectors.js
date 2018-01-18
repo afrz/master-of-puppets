@@ -12,6 +12,17 @@ export const selectMatrix = state => {
   });
 };
 
+//get X, Y coordinate of master coin (zero based)
+export const getMasterPoint = grid =>
+  grid.reduce((acc, r, rIndex) => {
+    const cIndex = r.findIndex(c => c.master);
+    if (cIndex >= 0) {
+      acc.col = cIndex;
+      acc.row = rIndex;
+    }
+    return acc;
+  }, {});
+
 //state selectors
 export const getMatrix = ({ matrix }) => matrix;
 export const getCards = ({ cards }) => cards;
