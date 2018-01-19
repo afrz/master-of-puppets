@@ -1,5 +1,5 @@
 // cards
-export const cards = [
+export const cardList = [
   {
     _id: "59c8e6049dc9ddeb9de474da",
     name: "Nunez Daniel",
@@ -190,7 +190,7 @@ export const cards = [
   }
 ];
 
-export const families = [
+export const familyList = [
   {
     _id: "59c8e6b01839417e57828a44",
     company: "JUNIPOR",

@@ -2,11 +2,11 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
 import GameBoard from "./GameBoard";
-import { selectMatrix, getMasterPoint } from "../../logic/selectors";
+import { translateToGrid, getMasterPoint } from "../../logic/selectors";
 import { pickCard } from "../../logic/actions";
 
 const mapStateToProps = state => {
-  const grid = selectMatrix(state);
+  const grid = translateToGrid(state);
   //  console.log(grid);
   return {
     grid,

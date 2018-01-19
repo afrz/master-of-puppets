@@ -1,7 +1,9 @@
-export const selectMatrix = state => {
+export const translateToGrid = state => {
   return getMatrix(state).map(r => {
     return r.map(c => {
       const card = getCard(state, c);
+
+      console.log(c);
       return Object.assign(
         {
           family: getFamily(state, card.family_id)

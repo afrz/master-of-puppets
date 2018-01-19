@@ -1,10 +1,11 @@
-// pickCard
-//
+import { PICK_CARD } from "../constants/actionTypes";
+
+import { getId } from "./selectors";
 
 export function pickCard(card) {
   return {
-    type: "PICK_CARD",
-    payload: card
+    type: PICK_CARD,
+    payload: getId(card)
   };
 }
 
