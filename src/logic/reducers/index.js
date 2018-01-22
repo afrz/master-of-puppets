@@ -1,34 +1,24 @@
 import { combineReducers } from "redux";
 
+import master from "./master";
+import player from "./player";
+
 import { cardList, familyList } from "../../constants/data";
 import { PICK_CARD, EMPTY_CARD } from "../../constants/actionTypes";
 import { hash, shuffle, replace } from "../../helpers/utils";
 
-import { getId } from "../selectors";
-
-//get X, Y coordinate of master coin (zero based)
-const getCardCoord = (matrix, identifier) =>
-  matrix.reduce((coord, row, rIndex) => {
-    const cIndex = row.findIndex(col => col === identifier);
-    if (cIndex >= 0) {
-      coord.x = cIndex;
-      coord.y = rIndex;
-    }
-    return coord;
-  }, {});
+import { getId, getCardCoord } from "../selectors";
 
 function matrix(state = generateMatrix(cardList, 6), action) {
   const { type } = action;
   if (type === PICK_CARD) {
     const identifier = action.payload;
 
-    const coord = getCardCoord(state, identifier);
+    const coord = getCardCoord(identifier)(state);
 
-    //- add card to player basket
     //alter matrix, move master to card place
     const row = state[coord.y];
     const newRow = replace(row, identifier, EMPTY_CARD);
-    // console.log(newRow);
 
     return replace(state, row, newRow);
   }
@@ -59,5 +49,7 @@ function families(state = hash(familyList, getId)) {
 export default combineReducers({
   matrix,
   families,
-  cards
+  cards,
+  master,
+  player
 });

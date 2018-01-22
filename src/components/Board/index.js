@@ -7,7 +7,8 @@ import { pickCard } from "../../logic/actions";
 
 const mapStateToProps = state => {
   const grid = translateToGrid(state);
-  //  console.log(grid);
+  console.log(state);
+  console.log(getMasterPoint(grid));
   return {
     grid,
     masterCoord: getMasterPoint(grid)

@@ -23,13 +23,21 @@ const TileContainer = styled.div`
   border-radius: ${props => (props.master ? "100%" : "3px")};
 `;
 
+const EmptyTileContainer = TileContainer.extend`
+  border: 0;
+  opacity: 0;
+`;
+
 const Tile = ({ tile, active, pickCard }) => {
+  if (tile.empty === true) {
+    return <EmptyTileContainer />;
+  }
   return (
     <TileContainer
       master={tile.master}
       backcolor={tile.family.color}
       active={active}
-      onClick={() => (active ? pickCard(tile) : {})}
+      onClick={() => (active && !tile.master ? pickCard(tile) : {})}
     >
       {tile.name}
     </TileContainer>
@@ -62,7 +70,7 @@ const TileRow = ({ row, active, masterCoord, pickCard }) => (
 );
 
 const Board = ({ grid, masterCoord, pickCard }) => {
-  console.log(masterCoord);
+  // console.log(grid);
   return (
     <div>
       {grid.map((row, index) => {
