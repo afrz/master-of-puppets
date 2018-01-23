@@ -1,6 +1,7 @@
 import { PICK_CARD } from "../../constants/actionTypes";
+import { cardList } from "../../constants/data";
 
-const initState = ""; //random card
+const initState = cardList[0]._id; //random card
 
 export default function masterCoin(state = initState, action) {
   const { type } = action;

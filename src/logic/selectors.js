@@ -6,7 +6,8 @@ export const translateToGrid = state => {
       if (!card) return { empty: true };
       return Object.assign(
         {
-          family: getFamily(state, card.family_id)
+          family: getFamily(state, card.family_id),
+          master: getMaster(state) === c
         },
         card
       );
@@ -14,19 +15,8 @@ export const translateToGrid = state => {
   });
 };
 
-// //get X, Y coordinate of master coin (zero based)
-// export const getCardCoord = (matrix, identifier) =>
-//   matrix.reduce((coord, row, rIndex) => {
-//     const cIndex = row.findIndex(col => col === identifier);
-//     if (cIndex >= 0) {
-//       coord.x = cIndex;
-//       coord.y = rIndex;
-//     }
-//     return coord;
-//   }, {});
-
-//get X, Y coordinate of master coin (zero based)
-const getCardCoordGeneric = predicate => matrix =>
+//get X, Y coordinate of a an item in a matrix depending on predicate (zero based)
+const getCoordInMatrix = (matrix, predicate) =>
   matrix.reduce((coord, row, rIndex) => {
     const cIndex = row.findIndex(predicate);
     if (cIndex >= 0) {
@@ -36,24 +26,19 @@ const getCardCoordGeneric = predicate => matrix =>
     return coord;
   }, {});
 
-export const getCardCoord = identifier =>
-  getCardCoordGeneric(x => x === identifier);
+//get X, Y coordinate of a card by its identifier
+export const getCardCoord = matrix => identifier =>
+  getCoordInMatrix(matrix, x => x === identifier);
 
-//get X, Y coordinate of master coin (zero based)
-export const getMasterPoint = grid =>
-  grid.reduce((acc, r, rIndex) => {
-    const cIndex = r.findIndex(c => c.master);
-    if (cIndex >= 0) {
-      acc.col = cIndex;
-      acc.row = rIndex;
-    }
-    return acc;
-  }, {});
+//get X, Y coordinate of master coin
+export const getMasterCoord = state =>
+  getCardCoord(getMatrix(state))(getMaster(state));
 
 //state selectors
 export const getMatrix = ({ matrix }) => matrix;
 export const getCards = ({ cards }) => cards;
 export const getFamilies = ({ families }) => families;
+export const getMaster = ({ master }) => master;
 
 //helpers
 export const getCard = (state, id) => getCards(state)[id];

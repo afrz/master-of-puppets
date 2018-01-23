@@ -61,7 +61,7 @@ const TileRow = ({ row, active, masterCoord, pickCard }) => (
         <Tile
           key={index}
           tile={col}
-          active={active || index === masterCoord.col}
+          active={active || index === masterCoord.x}
           pickCard={pickCard}
         />
       );
@@ -78,7 +78,7 @@ const Board = ({ grid, masterCoord, pickCard }) => {
           <TileRow
             key={index}
             row={row}
-            active={index === masterCoord.row}
+            active={index === masterCoord.y}
             masterCoord={masterCoord}
             pickCard={pickCard}
           />

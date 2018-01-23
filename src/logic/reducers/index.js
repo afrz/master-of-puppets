@@ -14,7 +14,7 @@ function matrix(state = generateMatrix(cardList, 6), action) {
   if (type === PICK_CARD) {
     const identifier = action.payload;
 
-    const coord = getCardCoord(identifier)(state);
+    const coord = getCardCoord(state)(identifier);
 
     //alter matrix, move master to card place
     const row = state[coord.y];
