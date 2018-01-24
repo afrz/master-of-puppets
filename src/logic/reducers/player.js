@@ -9,7 +9,7 @@ export default function player(state = initState, action) {
   if (type === PICK_CARD) {
     //- add card to player basket
     return Object.assign({}, state, {
-      kept: state.kept.concat([action.payload])
+      kept: state.kept.concat([action.payload.card])
     });
   }
   return state;
