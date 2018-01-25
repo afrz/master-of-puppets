@@ -1,14 +1,13 @@
-export const translateToGrid = state => {
-  const familySearch = familySearcher(state);
-  const cardSearch = cardSearcher(state);
+import { cardSearcher, familySearcher } from "./static";
 
+export const translateToGrid = state => {
   return getMatrix(state).map(r => {
     return r.map(c => {
-      const card = cardSearch(c);
+      const card = cardSearcher(c);
       if (!card) return { empty: true };
       return Object.assign(
         {
-          family: familySearch(getFamilyId(card)),
+          family: familySearcher(getFamilyId(card)),
           master: getMaster(state) === c
         },
         card
@@ -37,13 +36,11 @@ export const getMasterCoord = state =>
   getCardCoord(getMatrix(state))(getMaster(state));
 
 //state selectors
-export const getMatrix = ({ matrix }) => matrix;
 export const getCards = ({ cards }) => cards;
 export const getFamilies = ({ families }) => families;
+export const getMatrix = ({ matrix }) => matrix;
 export const getMaster = ({ master }) => master;
 
 //helpers
-export const cardSearcher = state => id => getCards(state)[id];
-export const familySearcher = state => id => getFamilies(state)[id];
 export const getId = ({ _id }) => _id;
 export const getFamilyId = ({ family_id }) => family_id;
