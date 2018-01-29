@@ -6,30 +6,40 @@ import player from "./player";
 import { PICK_CARD, EMPTY_CARD } from "../../constants/actionTypes";
 import { shuffle, replace } from "../../helpers/utils";
 
-import { getId, getCardCoord } from "../selectors";
-import cardList, { cardSearcher } from "../static";
+import { getId, getCardCoord, getFamilyId } from "../selectors";
+import cardList, { cardSearcher, familySearcher } from "../static";
 
 function matrix(state = generateMatrix(cardList, 6), action) {
   const { type } = action;
   if (type === PICK_CARD) {
-    console.log("matrix", state);
     const from = getCardCoord(state)(action.payload.from);
     const to = getCardCoord(state)(action.payload.card);
 
-    const toCard = cardSearcher(action.payload.card);
+    // console.log(from, to);
+    const pickedCard = cardSearcher(action.payload.card);
+    const pickedFamily = getId(familySearcher(getFamilyId(pickedCard)));
 
-    const cards = getCardsBetweenCoords(from, to);
+    //select all cards between coordinates and filter them by chosen family
+    const cards = getPathBetweenCoords(from, to)
+      .map(coord => cardSearcher(state[coord.y][coord.x]))
+      .filter(card => getFamilyId(card) === pickedFamily);
 
-    cards.forEach(coord =>
-      console.log(cardSearcher(state[coord.y][coord.x]).name)
-    );
+    cards.forEach(c => console.log(c));
 
-    //alter matrix, empty card between master and picked card
-    const row = state[from.y];
-    const newRow = replace(row, action.payload.from, EMPTY_CARD);
+    return state.map(row => {
+      let newRow = row;
+      cards.forEach(c => {
+        newRow = replace(newRow, getId(c), EMPTY_CARD);
+      });
+      console.log(newRow);
+      return newRow;
+    });
 
-    console.log(from, to);
-    return replace(state, row, newRow);
+    // //alter matrix, empty cards between master and picked card
+    // const row = state[from.y];
+    // const newRow = replace(row, action.payload.from, EMPTY_CARD);
+
+    // return replace(state, row, newRow);
   }
   return state;
 }
@@ -47,23 +57,29 @@ function generateMatrix(cardList, matrixSize) {
   }, []);
 }
 
-function getCardsBetweenCoords(a, b, matrix) {
-  const cards = [];
-  //cards.push(a);
+function getPathBetweenCoords(from, to, matrix) {
+  const coords = [];
 
-  for (let i = a.x; i <= b.x; i++) {
-    for (let j = a.y; j <= b.y; j++) {
-      console.log(i, j);
+  let start = from;
+  let end = to;
 
-      cards.push({
-        x: i,
-        y: j
+  //case movement is going backwards
+  if (from.x > to.x || from.y > to.y) {
+    start = to;
+    end = from;
+  }
+
+  //double loop but as movement is unidirectional, it will be o(n)
+  for (let x = start.x; x <= end.x; x++) {
+    for (let y = start.y; y <= end.y; y++) {
+      coords.push({
+        x,
+        y
       });
     }
   }
 
-  //cards.push(b);
-  return cards;
+  return coords;
 }
 
 export default combineReducers({
