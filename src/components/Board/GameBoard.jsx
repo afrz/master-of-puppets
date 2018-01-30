@@ -16,28 +16,34 @@ const TileContainer = styled.div`
   }
 
   border: ${props => (props.active ? "3px " : "2px")} solid black;
-
   opacity: ${props => (props.active ? "1" : "0.5")};
-  color: ${props => (props.master ? "white" : "black")};
-  background: ${props => (props.master ? "black" : props.backcolor)};
-  border-radius: ${props => (props.master ? "100%" : "3px")};
+  color: black;
+  border-radius: 3px;
+  background-color: ${props => props.backcolor};
 `;
 
-const EmptyTileContainer = TileContainer.extend`
+const EmptyTile = TileContainer.extend`
   border: 0;
   opacity: 0;
 `;
 
+const MasterTile = TileContainer.extend`
+  background-color: black;
+  border-radius: 100%;
+  opacity: 1;
+`;
+
 const Tile = ({ tile, active, pickCard }) => {
   if (tile.empty === true) {
-    return <EmptyTileContainer />;
+    return <EmptyTile />;
   }
+  if (tile.master === true) return <MasterTile />;
+
   return (
     <TileContainer
-      master={tile.master}
       backcolor={tile.family.color}
       active={active}
-      onClick={() => (active && !tile.master ? pickCard(tile) : {})}
+      onClick={() => (active ? pickCard(tile) : {})}
     >
       {tile.name}
     </TileContainer>

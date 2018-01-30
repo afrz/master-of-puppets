@@ -19,27 +19,27 @@ function matrix(state = generateMatrix(cardList, 6), action) {
     const pickedCard = cardSearcher(action.payload.card);
     const pickedFamily = getId(familySearcher(getFamilyId(pickedCard)));
 
-    //select all cards between coordinates and filter them by chosen family
+    //select all cards between coordinates
     const cards = getPathBetweenCoords(from, to)
+      //map to real cards
       .map(coord => cardSearcher(state[coord.y][coord.x]))
-      .filter(card => getFamilyId(card) === pickedFamily);
+      .filter(card => undefined !== card)
+      //only from chosen/picked family
+      .filter(card => getFamilyId(card) === pickedFamily)
+      //except picked card, which will becomes the master
+      .filter(card => card !== pickedCard)
+      //force add old master which will be emptied
+      .concat(cardSearcher(action.payload.from));
 
-    cards.forEach(c => console.log(c));
-
+    //alter matrix, empty cards between master and picked card
     return state.map(row => {
       let newRow = row;
       cards.forEach(c => {
         newRow = replace(newRow, getId(c), EMPTY_CARD);
       });
-      console.log(newRow);
+
       return newRow;
     });
-
-    // //alter matrix, empty cards between master and picked card
-    // const row = state[from.y];
-    // const newRow = replace(row, action.payload.from, EMPTY_CARD);
-
-    // return replace(state, row, newRow);
   }
   return state;
 }
@@ -57,7 +57,7 @@ function generateMatrix(cardList, matrixSize) {
   }, []);
 }
 
-function getPathBetweenCoords(from, to, matrix) {
+function getPathBetweenCoords(from, to) {
   const coords = [];
 
   let start = from;
@@ -83,7 +83,7 @@ function getPathBetweenCoords(from, to, matrix) {
 }
 
 export default combineReducers({
-  matrix,
   master,
+  matrix,
   player
 });

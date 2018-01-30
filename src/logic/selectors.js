@@ -1,4 +1,5 @@
 import { cardSearcher, familySearcher } from "./static";
+import { EMPTY_CARD } from "../constants/actionTypes";
 
 export const translateToGrid = state => {
   return getMatrix(state).map(r => {
@@ -44,3 +45,4 @@ export const getMaster = ({ master }) => master;
 //helpers
 export const getId = ({ _id }) => _id;
 export const getFamilyId = ({ family_id }) => family_id;
+export const isEmpty = card => card === EMPTY_CARD;
