@@ -46,3 +46,50 @@ export const getMaster = ({ master }) => master;
 export const getId = ({ _id }) => _id;
 export const getFamilyId = ({ family_id }) => family_id;
 export const isEmpty = card => card === EMPTY_CARD;
+
+export function getChosenCards(matrix, { from, card }) {
+  //
+  const go = getCardCoord(matrix)(from);
+  const to = getCardCoord(matrix)(card);
+
+  const pickedCard = cardSearcher(card);
+  const masterCard = cardSearcher(from);
+  const pickedFamily = getId(familySearcher(getFamilyId(pickedCard)));
+
+  //select all cards between coordinates
+  return (
+    getPathBetweenCoords(go, to)
+      //map to real cards
+      .map(coord => cardSearcher(matrix[coord.y][coord.x]))
+      .filter(card => undefined !== card)
+      //only from chosen/picked family
+      .filter(card => getFamilyId(card) === pickedFamily)
+      //except previous master
+      .filter(card => card !== masterCard)
+  );
+}
+
+function getPathBetweenCoords(from, to) {
+  const coords = [];
+
+  let start = from;
+  let end = to;
+
+  //case movement is going backwards
+  if (from.x > to.x || from.y > to.y) {
+    start = to;
+    end = from;
+  }
+
+  //double loop but as movement is unidirectional, it will be o(n)
+  for (let x = start.x; x <= end.x; x++) {
+    for (let y = start.y; y <= end.y; y++) {
+      coords.push({
+        x,
+        y
+      });
+    }
+  }
+
+  return coords;
+}

@@ -6,32 +6,24 @@ import player from "./player";
 import { PICK_CARD, EMPTY_CARD } from "../../constants/actionTypes";
 import { shuffle, replace } from "../../helpers/utils";
 
-import { getId, getCardCoord, getFamilyId } from "../selectors";
-import cardList, { cardSearcher, familySearcher } from "../static";
+import { getId, getChosenCards } from "../selectors";
+import cardList, { cardSearcher } from "../static";
 
 function matrix(state = generateMatrix(cardList, 6), action) {
   const { type } = action;
+
   if (type === PICK_CARD) {
-    const from = getCardCoord(state)(action.payload.from);
-    const to = getCardCoord(state)(action.payload.card);
-
-    // console.log(from, to);
+    const masterCard = cardSearcher(action.payload.from);
     const pickedCard = cardSearcher(action.payload.card);
-    const pickedFamily = getId(familySearcher(getFamilyId(pickedCard)));
 
-    //select all cards between coordinates
-    const cards = getPathBetweenCoords(from, to)
-      //map to real cards
-      .map(coord => cardSearcher(state[coord.y][coord.x]))
-      .filter(card => undefined !== card)
-      //only from chosen/picked family
-      .filter(card => getFamilyId(card) === pickedFamily)
+    //select all cards between coordinates to be emptied
+    const cards = getChosenCards(state, action.payload)
       //except picked card, which will becomes the master
       .filter(card => card !== pickedCard)
-      //force add old master which will be emptied
-      .concat(cardSearcher(action.payload.from));
+      //force add existing master which will be emptied
+      .concat(masterCard);
 
-    //alter matrix, empty cards between master and picked card
+    //alter matrix, empty all chosen card
     return state.map(row => {
       let newRow = row;
       cards.forEach(c => {
@@ -55,31 +47,6 @@ function generateMatrix(cardList, matrixSize) {
     }
     return matrix;
   }, []);
-}
-
-function getPathBetweenCoords(from, to) {
-  const coords = [];
-
-  let start = from;
-  let end = to;
-
-  //case movement is going backwards
-  if (from.x > to.x || from.y > to.y) {
-    start = to;
-    end = from;
-  }
-
-  //double loop but as movement is unidirectional, it will be o(n)
-  for (let x = start.x; x <= end.x; x++) {
-    for (let y = start.y; y <= end.y; y++) {
-      coords.push({
-        x,
-        y
-      });
-    }
-  }
-
-  return coords;
 }
 
 export default combineReducers({
