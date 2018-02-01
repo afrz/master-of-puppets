@@ -6,7 +6,7 @@ import { getId } from "../selectors";
 //random card
 const initState = getId(shuffle(cardList)[0]);
 
-export default function masterCoin(state = initState, action) {
+export default function masterCoinReducer(state = initState, action) {
   const { type } = action;
   if (type === PICK_CARD) {
     //move master to selected card

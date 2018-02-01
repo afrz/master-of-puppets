@@ -37,10 +37,11 @@ export const getMasterCoord = state =>
   getCardCoord(getMatrix(state))(getMaster(state));
 
 //state selectors
+export const getBoard = ({ board }) => board;
 export const getCards = ({ cards }) => cards;
 export const getFamilies = ({ families }) => families;
-export const getMatrix = ({ matrix }) => matrix;
 export const getMaster = ({ master }) => master;
+export const getMatrix = state => getBoard(state).matrix;
 
 //helpers
 export const getId = ({ _id }) => _id;

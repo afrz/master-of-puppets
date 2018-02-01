@@ -1,5 +1,4 @@
 import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
 
 import GameBoard from "./GameBoard";
 import { translateToGrid, getMasterCoord } from "../../logic/selectors";
@@ -15,7 +14,5 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators({ pickCard }, dispatch);
-
+const mapDispatchToProps = { pickCard };
 export default connect(mapStateToProps, mapDispatchToProps)(GameBoard);

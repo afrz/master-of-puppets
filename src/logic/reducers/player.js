@@ -1,16 +1,11 @@
 import { PICK_CARD } from "../../constants/actionTypes";
+import { getId } from "../selectors";
 
-const initState = {
-  kept: []
-};
-
-export default function player(state = initState, action) {
+export default function playerReducer(player, action, chosenCards) {
   const { type } = action;
   if (type === PICK_CARD) {
     //- add card to player basket
-    return Object.assign({}, state, {
-      kept: state.kept.concat([action.payload.card])
-    });
+    return chosenCards.map(x => getId(x));
   }
-  return state;
+  return player;
 }
