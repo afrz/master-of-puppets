@@ -4,7 +4,7 @@ import { Provider } from "react-redux";
 import styled from "styled-components";
 
 import GameBoard from "./components/Board";
-import PlayerBoard from "./components/player";
+import PlayerBoard from "./components/Player";
 
 const AppContainer = styled.div`
   display: flex;
