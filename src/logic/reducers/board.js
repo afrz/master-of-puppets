@@ -7,7 +7,7 @@ import playerReducer from "./player";
 //random card
 const initState = {
   matrix: generateMatrix(6),
-  player: {}
+  player: []
 };
 
 export default function boardReducer(state = initState, action) {

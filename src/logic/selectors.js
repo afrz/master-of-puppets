@@ -17,6 +17,10 @@ export const translateToGrid = state => {
   });
 };
 
+export function translateToCards(array) {
+  return array.map(x => cardSearcher(x));
+}
+
 //get X, Y coordinate of a an item in a matrix depending on predicate (zero based)
 const getCoordInMatrix = (matrix, predicate) =>
   matrix.reduce((coord, row, rIndex) => {

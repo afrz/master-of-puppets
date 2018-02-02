@@ -9,6 +9,7 @@ const TileContainer = styled.div`
   height: 60px;
   width: 60px;
   text-align: center;
+  white-space: pre-wrap;
 
   &:hover {
     color: white;
