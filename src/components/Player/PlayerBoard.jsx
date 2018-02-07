@@ -30,9 +30,26 @@ const PlayerBoard = ({ cards }) => {
 };
 
 const FamilyThumbContainer = styled.div`
-  border: 1px solid black;
-  margin: 10px 3px;
-  background-color: ${props => props.backcolor};
+  margin-bottom: 20px;
+
+  .header {
+    font-weight: bold;
+
+    span {
+      display: inline-block;
+      padding: 5px;
+      min-width: 10px;
+
+      margin: 5px;
+      border-radius: 15px;
+      color: white;
+      background-color: ${props => props.backcolor};
+    }
+  }
+
+  .content {
+    display: flex;
+  }
 `;
 
 const FamilyThumb = ({ family, cards }) => {
@@ -40,16 +57,34 @@ const FamilyThumb = ({ family, cards }) => {
 
   return (
     <FamilyThumbContainer backcolor={family.color}>
-      <div>{family.company}</div>
-      {cards.map(x => <CardThumb key={getId(x)} card={x} />)}
+      <div className="header">
+        <span>{cards.length}</span>
+        {family.company}
+      </div>
+      <div className="content">
+        {cards.map(x => <CardThumb key={getId(x)} card={x} family={family} />)}
+      </div>
     </FamilyThumbContainer>
   );
 };
 
-const CardThumbContainer = styled.div``;
+const CardThumbContainer = styled.div`
+  margin: 5px;
+  padding: 5px;
+  border: 1px solid black;
+  height: 15px;
+  width: 15px;
+  text-align: center;
 
-const CardThumb = ({ card }) => {
-  return <CardThumbContainer>{card.name.substring(0, 1)}</CardThumbContainer>;
+  background-color: ${props => props.backcolor};
+`;
+
+const CardThumb = ({ card, family }) => {
+  return (
+    <CardThumbContainer backcolor={family.color}>
+      {card.name.substring(0, 1)}
+    </CardThumbContainer>
+  );
 };
 
 export default PlayerBoard;
