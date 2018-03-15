@@ -76,10 +76,15 @@ const TileRow = ({ row, active, masterCoord, pickCard }) => (
   </FlexRow>
 );
 
-const Board = ({ grid, masterCoord, pickCard }) => {
+const Board = styled.div`
+  margin-top: 20px;
+  border: 1px solid #aaa;
+`;
+
+const BoardContainer = ({ grid, masterCoord, pickCard }) => {
   // console.log(grid);
   return (
-    <div>
+    <Board>
       {grid.map((row, index) => {
         return (
           <TileRow
@@ -91,8 +96,8 @@ const Board = ({ grid, masterCoord, pickCard }) => {
           />
         );
       })}
-    </div>
+    </Board>
   );
 };
 
-export default Board;
+export default BoardContainer;

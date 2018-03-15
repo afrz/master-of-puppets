@@ -19,7 +19,7 @@ const App = ({ store }) => (
     <AppContainer>
       <PlayerBoard />
       <GameBoard />
-      <PlayerBoard />
+      <PlayerBoard right />
     </AppContainer>
   </Provider>
 );

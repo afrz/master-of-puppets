@@ -8,9 +8,14 @@ const PlayerBoardContainer = styled.div`
   background: white;
   width: 100%;
   margin: 10px;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: ${props => (props.right ? "flex-end" : "flex-start")};
 `;
 
-const PlayerBoard = ({ cards }) => {
+const PlayerBoard = ({ cards, right = false }) => {
   const byFamily = cards.reduce((acc, c) => {
     const fid = getFamilyId(c);
     if (!acc[fid]) acc[fid] = [];
@@ -20,10 +25,17 @@ const PlayerBoard = ({ cards }) => {
   }, {});
 
   return (
-    <PlayerBoardContainer>
+    <PlayerBoardContainer right={right}>
       {Object.keys(byFamily).map(fid => {
         const fam = familySearcher(fid);
-        return <FamilyThumb key={fid} family={fam} cards={byFamily[fid]} />;
+        return (
+          <FamilyThumb
+            key={fid}
+            family={fam}
+            cards={byFamily[fid]}
+            right={right}
+          />
+        );
       })}
     </PlayerBoardContainer>
   );
@@ -31,6 +43,10 @@ const PlayerBoard = ({ cards }) => {
 
 const FamilyThumbContainer = styled.div`
   margin-bottom: 20px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: ${props => (props.right ? "flex-end" : "flex-start")};
 
   .header {
     font-weight: bold;
@@ -52,14 +68,15 @@ const FamilyThumbContainer = styled.div`
   }
 `;
 
-const FamilyThumb = ({ family, cards }) => {
+const FamilyThumb = ({ family, cards, right = false }) => {
   if (cards.length === 0) return null;
 
   return (
-    <FamilyThumbContainer backcolor={family.color}>
+    <FamilyThumbContainer backcolor={family.color} right={right}>
       <div className="header">
+        {right ? family.company : null}
         <span>{cards.length}</span>
-        {family.company}
+        {right ? null : family.company}
       </div>
       <div className="content">
         {cards.map(x => <CardThumb key={getId(x)} card={x} family={family} />)}
@@ -69,7 +86,7 @@ const FamilyThumb = ({ family, cards }) => {
 };
 
 const CardThumbContainer = styled.div`
-  margin: 5px;
+  margin: 2px;
   padding: 5px;
   border: 1px solid black;
   height: 15px;
