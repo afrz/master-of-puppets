@@ -17,9 +17,9 @@ const AppContainer = styled.div`
 const App = ({ store }) => (
   <Provider store={store}>
     <AppContainer>
-      <PlayerBoard />
+      <PlayerBoard player="A" />
       <GameBoard />
-      <PlayerBoard right />
+      <PlayerBoard player="B" right />
     </AppContainer>
   </Provider>
 );

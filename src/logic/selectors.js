@@ -46,6 +46,7 @@ export const getCards = ({ cards }) => cards;
 export const getFamilies = ({ families }) => families;
 export const getMaster = ({ master }) => master;
 export const getMatrix = state => getBoard(state).matrix;
+export const getCurrentPlayer = state => getBoard(state).currentPlayer;
 
 //helpers
 export const getId = ({ _id }) => _id;

@@ -4,6 +4,20 @@ import styled from "styled-components";
 import { getFamilyId, getId } from "../../logic/selectors";
 import { familySearcher } from "../../logic/static";
 
+const PlayerName = styled.div`
+  font-size: 22px;
+  font-weight: bold;
+
+  margin: 15px;
+
+  width: 80%;
+  border: ${props => (props.current ? "3px solid gray" : "")};
+  border-radius: 5px;
+
+  display: flex;
+  justify-content: center;
+`;
+
 const PlayerBoardContainer = styled.div`
   background: white;
   width: 100%;
@@ -15,7 +29,7 @@ const PlayerBoardContainer = styled.div`
   align-items: ${props => (props.right ? "flex-end" : "flex-start")};
 `;
 
-const PlayerBoard = ({ cards, right = false }) => {
+const PlayerBoard = ({ cards, current, name, right = false }) => {
   const byFamily = cards.reduce((acc, c) => {
     const fid = getFamilyId(c);
     if (!acc[fid]) acc[fid] = [];
@@ -26,6 +40,9 @@ const PlayerBoard = ({ cards, right = false }) => {
 
   return (
     <PlayerBoardContainer right={right}>
+      <PlayerName right={right} current={current}>
+        Player {name}
+      </PlayerName>
       {Object.keys(byFamily).map(fid => {
         const fam = familySearcher(fid);
         return (

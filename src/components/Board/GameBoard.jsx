@@ -10,14 +10,16 @@ const TileContainer = styled.div`
   width: 60px;
   text-align: center;
   white-space: pre-wrap;
+  overflow: hidden;
 
   &:hover {
-    color: white;
-    background: black;
+    color: ${props => (props.active ? "white" : "initial")};
+    cursor: ${props => (props.active ? "pointer" : "default")};
+    box-shadow: ${props => (props.active ? "0px 0px 10px 3px black" : "none")};
   }
 
-  border: ${props => (props.active ? "3px " : "2px")} solid black;
-  opacity: ${props => (props.active ? "1" : "0.5")};
+  border: ${props => (props.active ? "1px " : "0px")} solid black;
+  opacity: ${props => (props.active ? "1" : "0.4")};
   color: black;
   border-radius: 3px;
   background-color: ${props => props.backcolor};
@@ -31,6 +33,8 @@ const EmptyTile = TileContainer.extend`
 const MasterTile = TileContainer.extend`
   background-color: black;
   border-radius: 100%;
+  width: 55px;
+  height: 55px;
   opacity: 1;
 `;
 
@@ -78,7 +82,7 @@ const TileRow = ({ row, active, masterCoord, pickCard }) => (
 
 const Board = styled.div`
   margin-top: 20px;
-  border: 1px solid #aaa;
+  //border: 1px solid #aaa;
 `;
 
 const BoardContainer = ({ grid, masterCoord, pickCard }) => {
