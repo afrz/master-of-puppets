@@ -11,8 +11,6 @@ const initState = {
   currentPlayer: "A"
 };
 
-const isFirstPlayer = player => player === "A";
-
 export default function boardReducer(state = initState, action) {
   const { type } = action;
   if (type === PICK_CARD) {

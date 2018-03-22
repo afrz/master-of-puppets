@@ -14,3 +14,5 @@ Tech Stack :
 ## Rules
 
 `F5` : Start a new game
+
+#### Go play at [afrz.github.io/master-of-puppets](https://afrz.github.io/master-of-puppets).

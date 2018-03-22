@@ -5,23 +5,27 @@
   "private": true,
   "author": "afrz",
   "license": "MIT",
-  "homepage": "https://github.com/afrz/master-of-puppets#readme",
+  "homepage": "https://afrz.github.io/master-of-puppets",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/afrz/master-of-puppets.git"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom"
+    "build": "react-scripts build"
   },
   "dependencies": {
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "react-redux": "^5.0.6",
-    "react-scripts": "1.0.14",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
     "styled-components": "^2.2.0"
+  },
+  "devDependencies": {
+    "gh-pages": "^1.1.0",
+    "react-scripts": "1.0.14"
   }
 }
