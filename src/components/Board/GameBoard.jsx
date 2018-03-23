@@ -82,13 +82,14 @@ const TileRow = ({ row, active, masterCoord, pickCard }) => (
 
 const Board = styled.div`
   margin-top: 20px;
-  //border: 1px solid #aaa;
+
+  opacity: ${props => (props.close ? "0.3" : "1")};
+  border: ${props => (props.close ? "1px solid #000" : "")};
 `;
 
-const BoardContainer = ({ grid, masterCoord, pickCard }) => {
-  // console.log(grid);
+const BoardContainer = ({ grid, end, masterCoord, pickCard }) => {
   return (
-    <Board>
+    <Board close={end}>
       {grid.map((row, index) => {
         return (
           <TileRow
